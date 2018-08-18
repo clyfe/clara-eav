@@ -6,8 +6,8 @@ similar to [Triplestores](https://en.wikipedia.org/wiki/Triplestore).
 
 The main benefit of EAV triplets over Clara's default n-tuples (arbitrary
 records) is that updates (equivalent to a retraction and an insertion) are local
-to the attribute (EAV triplet). Updating an n-tuple requires retraction and re-
-insertion of the whole tuple. The downside is extra joins are needed to build 
+to the attribute (EAV triplet). Updating an n-tuple requires retraction and 
+re-insertion of the whole tuple. The downside is extra joins are needed to build 
 back an entity from it's constituent EAVs.
 
 ## Installation

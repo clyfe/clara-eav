@@ -7,7 +7,7 @@
 - Added a changelog, regenerated docs.
 
 ### [0.1.2] - 2018-08-17
-### Changed
+#### Changed
 - Transients have an attribute `:eav/transient` instead `:transient`.
 
 ### [0.1.1] - 2018-08-17

@@ -1,9 +1,12 @@
 (ns clara-eav.store-test
   (:require [clara-eav.eav :as eav]
             [clara-eav.store :as store]
-    #?(:clj [clojure.test :refer [deftest testing is are]]
-       :cljs [cljs.test :refer-macros [deftest testing is are]]))
+            [clara-eav.test-helper :as test-helper]
+    #?(:clj [clojure.test :refer [deftest testing is are use-fixtures]]
+       :cljs [cljs.test :refer-macros [deftest testing is are use-fixtures]]))
   #?(:clj (:import (clojure.lang ExceptionInfo))))
+
+(use-fixtures :once test-helper/spec-fixture)
 
 (deftest state-test
   (testing "Store cleaned after transaction computation"

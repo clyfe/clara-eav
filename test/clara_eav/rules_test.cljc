@@ -1,11 +1,14 @@
 (ns clara-eav.rules-test
-  (:require [clara-eav.test-rules :as test-rules]
+  (:require [clara-eav.test-helper :as test-helper]
+            [clara-eav.test-rules :as test-rules]
     #?@(:clj [[clara.rules :as rules]
             [clara-eav.rules :as eav.rules]
-            [clojure.test :refer [deftest testing is are]]]
+            [clojure.test :refer [deftest testing is are use-fixtures]]]
         :cljs [[clara.rules :as rules :include-macros true]
                [clara-eav.rules :as eav.rules :include-macros true]
-               [cljs.test :refer-macros [deftest testing is are run-tests]]])))
+               [cljs.test :refer-macros [deftest testing is are use-fixtures]]])))
+
+(use-fixtures :once test-helper/spec-fixture)
 
 (def new1 #:todo{:db/id :new :text "..." :done false})
 (def milk1 #:todo{:text "Buy milk" :done false})

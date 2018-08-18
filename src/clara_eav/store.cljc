@@ -10,11 +10,27 @@
   mechanisms from Clara."
   nil)
 
+(s/def ::e
+  (s/or :string string?
+        :keyword keyword?
+        :uuid uuid?
+        :int int?))
+
+(s/fdef tempid?
+  :args (s/cat :e ::e)
+  :ret boolean?)
+(defn- tempid?
+  "True if `e` is a tempid. Strings and negative ints are tempids; keywords,
+  positive ints and uuids are not."
+  [e]
+  (or (string? e)
+      (neg-int? e)))
+
 (s/def ::max-eid integer?)
 (s/def ::eav-index map?)
 (s/def ::insertables ::eav/record-seq)
 (s/def ::retractables ::eav/record-seq)
-(s/def ::tempids (s/map-of string? integer?))
+(s/def ::tempids (s/map-of tempid? integer?))
 (s/def ::store (s/keys :req-un [::max-eid ::eav-index]))
 (s/def ::store-tx
   (s/keys :req-un [::max-eid ::eav-index]
@@ -32,22 +48,6 @@
   the store state."
   [store]
   (select-keys store [:max-eid :eav-index]))
-
-(s/def ::e
-  (s/or :string string?
-        :keyword keyword?
-        :uuid uuid?
-        :integer integer?))
-
-(s/fdef tempid?
-  :args (s/cat :e ::e)
-  :ret boolean?)
-(defn- tempid?
-  "True if `e` is a tempid. Strings and negative ints are tempids; keywords,
-  positive ints and uuids are not."
-  [e]
-  (or (string? e)
-      (neg-int? e)))
 
 (s/fdef -eav
   :args (s/cat :store ::store-tx

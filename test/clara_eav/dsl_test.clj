@@ -1,7 +1,10 @@
 (ns clara-eav.dsl-test
   (:require [clojure.spec.alpha :as s]
+            [clara-eav.test-helper :as test-helper]
             [clara-eav.dsl :as dsl]
-            [clojure.test :refer [deftest testing is are]]))
+            [clojure.test :refer [deftest testing is are use-fixtures]]))
+
+(use-fixtures :once test-helper/spec-fixture)
 
 (defn eav [v] (s/conform ::dsl/eav v))
 (defn eav-2nd [eav] (cond-> eav (vector? eav) second))

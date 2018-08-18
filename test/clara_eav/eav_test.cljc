@@ -1,9 +1,9 @@
 (ns clara-eav.eav-test
-  (:require
-    #?@(:clj [[clojure.test :refer [deftest testing is are]]
+  (:require [clara-eav.test-helper :as test-helper]
+    #?@(:clj [[clojure.test :refer [deftest testing is are use-fixtures]]
               [clojure.spec.alpha :as s]
               [clara-eav.eav :as eav]]
-        :cljs [[cljs.test :refer-macros [deftest testing is are]]
+        :cljs [[cljs.test :refer-macros [deftest testing is are use-fixtures]]
                [cljs.spec.alpha :as s]
                [clara-eav.eav :as eav :refer [EAV]]])
               [clojure.set :as set])
@@ -11,6 +11,8 @@
             (clara_eav.eav EAV)
             (clojure.lang Associative)
             (java.util UUID))))
+
+(use-fixtures :once test-helper/spec-fixture)
 
 (deftest eav-test
   (testing "Constructing and destructuring a eav."

@@ -1,12 +1,15 @@
 (ns clara-eav.session-test
   (:require [spy.core :as spy]
+            [clara-eav.test-helper :as test-helper]
             [clara.rules.engine :as engine]
             [clara-eav.store :as store]
             [clara-eav.session :as session]
-    #?@(:clj [[clojure.test :refer [deftest testing is are]] 
+    #?@(:clj [[clojure.test :refer [deftest testing is are use-fixtures]]
             [spy.protocol :as protocol]]
-       :cljs [[cljs.test :refer-macros [deftest testing is are]]]))
+       :cljs [[cljs.test :refer-macros [deftest testing is are use-fixtures]]]))
   #?(:cljs (:require-macros [spy.protocol :as protocol])))
+
+(use-fixtures :once test-helper/spec-fixture)
 
 (deftest session-test
   (testing "Session delegation"

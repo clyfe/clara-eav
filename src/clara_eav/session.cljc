@@ -37,8 +37,19 @@
 
 (s/def ::session session?)
 
+(defn isession?
+  "Returns true if `isession` implements `clara.rules.engine/ISession`, false
+  otherwise."
+  [isession]
+  (satisfies? engine/ISession isession))
+
+(s/def ::isession isession?)
+
+(s/fdef wrap
+  :args (s/cat :isession ::isession)
+  :ret ::session)
 (defn wrap
   "Wraps a Clara Rules Session with a `SessionWrapper` that keeps track of
   extra state in a store, as needed by ClaraEAV."
-  [session]
-  (->SessionWrapper session store/init))
+  [isession]
+  (->SessionWrapper isession store/init))

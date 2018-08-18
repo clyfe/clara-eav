@@ -193,7 +193,7 @@ Functions are somewhat similar with those in Clara.
                      {:todo/text "Buy eggs"
                       :todo/done true}])
 
-;; Retract an EAV from within a rule, with truth maintenance.
+;; Retract an EAV from within a rule
 (er/retract! [5 :todo/done true])
 ```
 
