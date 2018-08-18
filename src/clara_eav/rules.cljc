@@ -11,7 +11,7 @@
     #?@(:clj [[clojure.spec.alpha :as s]
               [clara-eav.dsl :as dsl]]
         :cljs [[cljs.spec.alpha :as s]]))
-  #?(:cljs (:require-macros 
+  #?(:cljs (:require-macros
              [clara.rules :as rules])))
 
 ;; Transient EAVs maintenance
@@ -32,8 +32,8 @@
   `(do (rules/defsession ~name 'clara-eav.rules ~@nss
          :fact-type-fn eav/fact-type-fn
          :ancestors-fn eav/ancestors-fn)
-       ~(if (:ns &env) 
-          `(set! ~name (session/wrap ~name)) 
+       ~(if (:ns &env)
+          `(set! ~name (session/wrap ~name))
           `(alter-var-root #'~name session/wrap))))
 
 ;; Rules and Queries
@@ -57,12 +57,10 @@
 (defn retract
   "Like Clara-Rules retract; tx is transaction data with no tempids."
   [session tx]
-  (let [{:keys [store]} session
-        eavs (eav/eav-seq tx)
-        store' (store/-eavs store eavs)
-        {:keys [retractables]} store']
+  (let [{:keys [retractables]
+         :as store} (store/-eavs (:store session) (eav/eav-seq tx))]
     (assoc (engine/retract session retractables)
-      :store (store/state store'))))
+      :store (store/state store))))
 
 (s/fdef retract!
   :args (s/cat :tx ::eav/tx)
@@ -70,11 +68,10 @@
 (defn retract!
   "Like Clara-Rules retract!; tx is transaction data with no tempids."
   [tx]
-  (let [eavs (eav/eav-seq tx)
-        store' (store/-eavs @store/*store* eavs)
-        {:keys [retractables]} store']
+  (let [{:keys [retractables]
+         :as store} (store/-eavs @store/*store* (eav/eav-seq tx))]
     (when (seq retractables)
-      (reset! store/*store* (store/state store'))
+      (reset! store/*store* (store/state store))
       (engine/rhs-retract-facts! retractables))))
 
 ;; Upserts
@@ -87,11 +84,9 @@
   "Similar to Clara-Rules insert-all; tx is transaction data. Retracts EAVs that
   have the same eid and attribute but with a new value."
   [session tx]
-  (let [{:keys [store]} session
-        eavs (eav/eav-seq tx)
-        {:keys [insertables retractables tempids] 
-         :as store'} (store/+eavs store eavs)]
-    (cond-> (assoc session :store (store/state store'))
+  (let [{:keys [insertables retractables tempids]
+         :as store} (store/+eavs (:store session) (eav/eav-seq tx))]
+    (cond-> (assoc session :store (store/state store))
             (seq retractables) (engine/retract retractables)
             (seq insertables) (engine/insert insertables)
             (seq tempids) (assoc :tempids tempids))))
@@ -102,13 +97,12 @@
   :ret ::session/session)
 (defn- upsert!*
   [tx unconditional]
-  (let [eavs (eav/eav-seq tx)
-        {:keys [insertables retractables] 
-         :as store'} (store/+eavs @store/*store* eavs)]
+  (let [{:keys [insertables retractables]
+         :as store} (store/+eavs @store/*store* (eav/eav-seq tx))]
     (when (seq retractables)
       (engine/rhs-retract-facts! retractables))
     (when (seq insertables)
-      (reset! store/*store* (store/state store'))
+      (reset! store/*store* (store/state store))
       (engine/insert-facts! insertables unconditional))))
 
 (s/fdef upsert!
@@ -135,7 +129,7 @@
   "Throws ExceptionInfo if `e` and `e'` are not equal."
   [e e']
   (when (not= e e')
-    (throw (ex-info (str "An entity's EAVs must have same eid, " 
+    (throw (ex-info (str "An entity's EAVs must have same eid, "
                          "but found " e " and " e')
                     {:e e, :e' e'}))))
 

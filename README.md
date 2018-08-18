@@ -21,7 +21,7 @@ ClaraEAV releases are on Clojars:
 ## Usage
 
 You should be familiar with [Clara Rules](https://www.clara-rules.org) before 
-using ClaraEAV. See the documentation on Cljdoc:
+using ClaraEAV. See the documentation including the usage guide on Cljdoc:
 
 [![cljdoc badge](https://cljdoc.xyz/badge/clyfe/clara-eav)](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT)
 

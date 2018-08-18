@@ -1,6 +1,8 @@
 ## Changelog
 
 ### [Unreleased]
+#### Changed
+- Refactored rules namespace and test.
 
 ### [0.1.5] - 2018-08-17
 #### Removed

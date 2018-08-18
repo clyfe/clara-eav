@@ -113,7 +113,7 @@
 (defn transform
   "Convert the ClaraEAV form containing triplets to plain Clara rule based on 
   the EAV type by walking each node of the input using prewalk and replacing 
-  `::fact-eav` nodes `::fact-clara` nodes."
+  `::fact-eav` nodes with `::fact-clara` nodes."
   [spec form-eav]
   (->> form-eav
        (s/conform spec)

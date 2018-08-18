@@ -1,6 +1,5 @@
 (ns clara-eav.rules-test
   (:require [clara-eav.test-helper :as test-helper]
-            [clara-eav.test-rules :as test-rules]
     #?@(:clj [[clara.rules :as rules]
             [clara-eav.rules :as eav.rules]
             [clojure.test :refer [deftest testing is are use-fixtures]]]
@@ -13,32 +12,61 @@
 (def new1 #:todo{:db/id :new :text "..." :done false})
 (def milk1 #:todo{:text "Buy milk" :done false})
 (def eggs1 #:todo{:text "Buy eggs" :done true})
+(def flakes #:todo{:text "Buy flakes" :done false})
 
 (def new2 (assoc new1 :todo/text "!!!"))
 (def milk2 (assoc milk1 :db/id 1, :todo/text "Buy milk2"))
 (def eggs2 (assoc eggs1 :db/id 2))
 (def ham2 #:todo{:text "Buy ham" :done false})
+(def cookie-a #:todo{:text "Buy cookie a" :done false})
+(def cookie-b #:todo{:text "Buy cookie b" :done false})
 
 (def toast5 #:todo{:db/id "toast-tempid" :text "Buy toast" :done true})
 (def jam5 #:todo{:db/id -7 :text "Buy jam" :done true})
 
+(eav.rules/defquery todo-q [:?e]
+  [?todo <- eav.rules/entity :from [[?e]]])
+
+(eav.rules/defquery todos-q []
+  [[?e :todo/text]]
+  [?todos <- eav.rules/entities :from [[?e]]])
+
+(eav.rules/defquery transients-q []
+  [?transient <- [:eav/transient]])
+
+(eav.rules/defrule milk-and-flakes-r
+  [[_ :todo/text "Buy milk"]]
+  =>
+  (eav.rules/upsert-unconditional! flakes))
+
+(eav.rules/defrule milk2-and-cookies-r
+  [[_ :todo/text "Buy milk2"]]
+  =>
+  (eav.rules/upsert! [cookie-a cookie-b]))
+
+(eav.rules/defrule remove-r
+  [[:remove :eav/transient ?e]]
+  [?eav <- [?e ?a ?v]]
+  =>
+  (eav.rules/retract! ?eav))
+
 (eav.rules/defsession session
-  'clara-eav.test-rules)
+  'clara-eav.rules-test)
 
 (defn todo
   [session ?e]
-  (-> (rules/query session test-rules/todo-q :?e ?e)
+  (-> (rules/query session todo-q :?e ?e)
       first
       :?todo))
 
 (defn todos
   [session]
-  (->> (rules/query session test-rules/todos-q)
+  (->> (rules/query session todos-q)
        (mapcat :?todos)))
 
 (defn transients
   [session]
-  (->> (rules/query session test-rules/transients-q)
+  (->> (rules/query session transients-q)
        (map :?transient)))
 
 (defn upsert
@@ -58,10 +86,10 @@
                    :eav-index {:new (dissoc new1 :db/id)
                                1 milk1
                                2 eggs1
-                               3 test-rules/flakes}}
+                               3 flakes}}
           milk1s (assoc milk1 :db/id 1)
           eggs1s (assoc eggs1 :db/id 2)
-          flakes1s (assoc test-rules/flakes :db/id 3)
+          flakes1s (assoc flakes :db/id 3)
           all1 (list new1 milk1s eggs1s flakes1s)
           _ (are [x y] (= x y)
               new1 (todo session1 :new)
@@ -73,13 +101,13 @@
                    :eav-index {:new (dissoc new2 :db/id)
                                1 (dissoc milk2 :db/id)
                                2 eggs1
-                               3 test-rules/flakes
+                               3 flakes
                                4 ham2
-                               5 test-rules/cookie-a
-                               6 test-rules/cookie-b}}
+                               5 cookie-a
+                               6 cookie-b}}
           ham2s (assoc ham2 :db/id 4)
-          cookie-as (assoc test-rules/cookie-a :db/id 5)
-          cookie-bs (assoc test-rules/cookie-b :db/id 6)
+          cookie-as (assoc cookie-a :db/id 5)
+          cookie-bs (assoc cookie-b :db/id 6)
           all2 (list eggs2 flakes1s new2 milk2 ham2s cookie-as cookie-bs)
           eggs3 (assoc eggs1 :db/id 2)
           _ (are [x y] (= x y)
@@ -90,10 +118,10 @@
           session3 (retract session2 [new2 eggs3])
           store3s {:max-eid 6
                    :eav-index {1 (dissoc milk2 :db/id)
-                               3 test-rules/flakes
+                               3 flakes
                                4 ham2
-                               5 test-rules/cookie-a
-                               6 test-rules/cookie-b}}
+                               5 cookie-a
+                               6 cookie-b}}
           all3 (list flakes1s milk2 ham2s cookie-as cookie-bs)
           _ (are [x y] (= x y)
               nil (todo session3 :new)
@@ -104,7 +132,7 @@
                                      [:remove :eav/transient 6]])
           store4s {:max-eid 6
                    :eav-index {1 (dissoc milk2 :db/id)
-                               3 test-rules/flakes
+                               3 flakes
                                4 ham2}}
           all4 (list flakes1s milk2 ham2s)
           _ (are [x y] (= x y)
@@ -115,7 +143,7 @@
           session5 (upsert session4 [toast5 jam5])
           store5s {:max-eid 8
                    :eav-index {1 (dissoc milk2 :db/id)
-                               3 test-rules/flakes
+                               3 flakes
                                4 ham2
                                7 (dissoc toast5 :db/id)
                                8 (dissoc jam5 :db/id)}}
