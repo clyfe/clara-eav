@@ -1,4 +1,4 @@
-(defproject clyfe/clara-eav "0.1.4"
+(defproject clyfe/clara-eav "0.1.5-SNAPSHOT"
   :description "EAV triplets for Clara Rules"
   :license      {:name "MIT"
                  :url "https://github.com/clyfe/clara-eav/blob/master/LICENSE"}
@@ -7,9 +7,7 @@
                  [medley "1.0.0"]
                  [com.cerner/clara-rules "0.18.0"]]
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [org.clojure/clojure]]
-            [lein-doo "0.1.10" :exclusions [org.clojure/clojure]]
-            [lein-codox "0.10.4"]
-            [lein-cljfmt "0.6.0"]]
+            [lein-doo "0.1.10" :exclusions [org.clojure/clojure]]]
   :codox {:metadata {:doc/format :markdown}}
   :doo {:paths {:rhino "lein run -m org.mozilla.javascript.tools.shell.Main"}}
   

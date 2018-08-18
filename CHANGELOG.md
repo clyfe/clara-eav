@@ -1,6 +1,15 @@
 ## Changelog
 
 ### [Unreleased]
+#### Removed
+- Removed codox and cljfmt from lein plugins list.
+#### Added
+- Added CircleCI
+- Added missing 0.1.4 changelog entry.
+
+### [0.1.4] - 2018-08-17
+#### Added
+- Added a spec instrumentation in tests.
 
 ### [0.1.3] - 2018-08-17
 #### Added
@@ -16,4 +25,4 @@
 
 ### 0.1.0 - 2018-08-17
 #### Added
-- First release
+- First release.

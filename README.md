@@ -10,6 +10,8 @@ to the attribute (EAV triplet). Updating an n-tuple requires retraction and
 re-insertion of the whole tuple. The downside is extra joins are needed to build 
 back an entity from it's constituent EAVs.
 
+[![Build Status](https://travis-ci.org/clyfe/clara-eav.svg?branch=master)](https://travis-ci.org/clyfe/clara-eav)
+
 ## Installation
 
 ClaraEAV releases are on Clojars:
