@@ -18,7 +18,7 @@
 
 (rules/defrule ^:no-doc retract-transients
   {:salience -1000000000}
-  [?d <- :transient]
+  [?d <- :eav/transient]
   =>
   (rules/retract! ?d))
 

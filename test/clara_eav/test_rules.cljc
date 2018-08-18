@@ -17,7 +17,7 @@
   [?todos <- eav.rules/entities :from [[?e]]])
 
 (eav.rules/defquery transients-q []
-  [?transient <- [:transient]])
+  [?transient <- [:eav/transient]])
 
 (eav.rules/defrule milk-and-flakes-r
   [[_ :todo/text "Buy milk"]]
@@ -30,7 +30,7 @@
   (eav.rules/upsert! [cookie-a cookie-b]))
 
 (eav.rules/defrule remove-r
-  [[:remove :transient ?e]]
+  [[:remove :eav/transient ?e]]
   [?eav <- [?e ?a ?v]]
   =>
   (eav.rules/retract! ?eav))

@@ -97,8 +97,8 @@
               all3 (todos session3)
               store3s (:store session3))
 
-          session4 (upsert session3 [[:remove :transient 5]
-                                     [:remove :transient 6]])
+          session4 (upsert session3 [[:remove :eav/transient 5]
+                                     [:remove :eav/transient 6]])
           store4s {:max-eid 6
                    :eav-index {1 (dissoc milk2 :db/id)
                                3 test-rules/flakes

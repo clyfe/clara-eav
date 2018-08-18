@@ -99,7 +99,7 @@
               (assoc-in [:tempids e] new-eid)
               (assoc :max-eid new-eid)
               (assoc-in [:eav-index new-eid a] v))))
-      (if (= :transient a)
+      (if (= :eav/transient a)
         (update store :insertables conj eav)
         (if-some [v' (get-in eav-index [e a])]
           (cond-> store

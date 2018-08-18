@@ -69,12 +69,12 @@ tempid will be saved with the same eid. Tempids are not allowed in retractions.
 
 #### Transient EAVs 
 
-EAVs with `:transient` attribute, when upserted, run through the rule chain and
-activate rules that refer them, but are retracted at the end (at salience -1 
+EAVs with `:eav/transient` attribute, when upserted, run through the rule chain 
+and activate rules that refer them, but are retracted at the end (at salience -1 
 billion), and don't end up being saved. They can be used to implement commands.
 
 ```clojure
-[:my-command :transient "my-value"]
+[:my-command :eav/transient "my-value"]
 ```
 
 #### Fact DSL

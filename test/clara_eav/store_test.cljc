@@ -40,7 +40,7 @@
    (eav/->EAV -3 :todo/tag :ham)
    (eav/->EAV 1 :todo/text "Buy cheese")
    (eav/->EAV 1 :todo/tag :cheese)
-   (eav/->EAV :do :transient "something")])
+   (eav/->EAV :do :eav/transient "something")])
 
 (def insertables'
   [(eav/->EAV 2 :todo/text "Buy milk")
@@ -50,7 +50,7 @@
    (eav/->EAV 3 :todo/tag :ham)
    (eav/->EAV 1 :todo/text "Buy cheese")
    (eav/->EAV 1 :todo/tag :cheese)
-   (eav/->EAV :do :transient "something")])
+   (eav/->EAV :do :eav/transient "something")])
 
 (def retractables'
   [(eav/->EAV 1 :todo/tag :not-cheese)])
