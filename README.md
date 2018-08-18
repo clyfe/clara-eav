@@ -12,27 +12,16 @@ back an entity from it's constituent EAVs.
 
 ## Installation
 
-Clara releases are on [Clojars](https://clojars.org/). Add the following to your
-project dependencies:
+ClaraEAV releases are on Clojars:
 
-```clojure
-[clyfe/clara-eav "0.1.0"]
-```
+[![Clojars Project](https://img.shields.io/clojars/v/clyfe/clara-eav.svg)](https://clojars.org/clyfe/clara-eav)
 
 ## Usage
 
 You should be familiar with [Clara Rules](https://www.clara-rules.org) before 
-using ClaraEAV. 
+using ClaraEAV. See the documentation on Cljdoc:
 
-The `clara-eav.rules` namespace mirrors `clara.rules` for the most 
-part, and adds two accumulators to build back entity maps from stored EAV 
-triplets. 
-
-For more information see the [Guide](doc/guide.md) and 
-[API Docs](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT). Tests can be useful, 
-see: [test_rules.cljc](test/clara_eav/test_rules.cljc) for rules and queries 
-definition and [rules_test.cljc](test/clara_eav/rules_test.cljc) for sample 
-usage.
+[![cljdoc badge](https://cljdoc.xyz/badge/clyfe/clara-eav)](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT)
 
 ```clojure
 (ns sample
