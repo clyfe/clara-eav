@@ -1,6 +1,8 @@
 ## Changelog
 
 ### [Unreleased]
+
+### [0.1.5] - 2018-08-17
 #### Removed
 - Removed codox and cljfmt from lein plugins list.
 #### Added
