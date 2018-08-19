@@ -1,5 +1,6 @@
 (defproject clyfe/clara-eav "0.1.6-SNAPSHOT"
   :description "EAV triplets for Clara Rules"
+  :url         "https://github.com/clyfe/clara-eav"
   :license      {:name "MIT"
                  :url "https://github.com/clyfe/clara-eav/blob/master/LICENSE"}
   :dependencies [[org.clojure/clojure "1.9.0"]

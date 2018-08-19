@@ -153,12 +153,12 @@ Functions are somewhat similar with those in Clara.
 ```clojure
 ;; Upsert an EAV; if the attribute :layout exists under the eid :global, it's 
 ;; value will be updated to :login, otherwise the triplet will be inserted.
-;; Like in Clara use functions not ending in exclamation mark are used 
-;; outside of rules and take the session parameter.
+;; Like in Clara functions not ending in exclamation mark are used outside of
+;; rules and take the session parameter.
 (er/upsert session [:global :layout :login])
 
-;; Upsert a list of EAVs. Like in Clara use functions ending in exclamation mark
-;; are used inside rules, with truth maintenance.
+;; Upsert a list of EAVs. Like in Clara functions ending in exclamation mark are
+;; used inside rules, with truth maintenance.
 (er/upsert! [[:new :todo/text "..."] 
              [:new :todo/done false]])
 

@@ -3,9 +3,11 @@
 ### [Unreleased]
 #### Changed
 - Minor code refactor to rules namespace and test, and dsl test.
+- Fixed grammar errors in guide.md
 #### Added
 - Added code coverage via lein-cloverage
 - Added MIT license badge
+- Added project url
 
 ### [0.1.5] - 2018-08-17
 #### Removed
