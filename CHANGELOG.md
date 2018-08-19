@@ -2,7 +2,7 @@
 
 ### [Unreleased]
 #### Changed
-- Refactored rules namespace and test.
+- Minor code refactor to rules namespace and test, and dsl test.
 
 ### [0.1.5] - 2018-08-17
 #### Removed

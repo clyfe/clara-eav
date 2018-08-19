@@ -12,27 +12,27 @@
 (deftest conform-fact-eav-test
   (testing "Fact-EAV parsing"
     (are [x y] (= x (eav-2nd (eav y)))
-         
+
          #::dsl{:e '?e, :a '?a, :v '?v}
          ['?e '?a '?v]
-         
+
          #::dsl{:e 1, :a :todo/done, :v false}
          [1 :todo/done false]
-         
+
          #::dsl{:e '_, :a :todo/done, :v false}
          ['_ :todo/done false]
-         
+
          #::dsl{:e 1, :a :todo/done}
          [1 :todo/done]
-         
+
          #::dsl{:e 1}
          [1]
-         
+
          #::dsl{:e '_}
          ['_])
-    
+
     (are [x] (= ::s/invalid (eav x))
-         [1 2 3] 
+         [1 2 3]
          [1 :todo/done false 4]
          ['_ 1]
          [])))
@@ -40,16 +40,16 @@
 (deftest conditions-test
   (testing "Transforming an EAV conditions into a Clara-Rules conditions."
     (are [x y] (= x (#'dsl/conditions (second (eav y))))
-         
+
          '((= (:e this) 1) (= (:v this) false))
          [1 :todo/done false]
-         
+
          '((= (:v this) false))
          ['_ :todo/done false]
-         
+
          '((= (:e this) 1))
          [1 :todo/done]
-         
+
          '()
          ['_ :todo/done])))
 
@@ -81,21 +81,23 @@
      [:and [:or [Toggle (> c ?e) (= d d?)]
             [[_ :todo/tag :project]]]
       [Toggle (< b ?e)]]
-     => (insert! [?e :todo/done (not ?v)])))
+     =>
+     (insert! [?e :todo/done (not ?v)])))
 
 (def defrule-clara
-  (list {:salience 100}
-        '[Toggle (= e ?e)]
-        [:eav/all]
-        [:eav/all '(= (:e this) :eav/transient)]
-        [:todo/done '(= (:e this) ?e) '(= (:v this) ?v)]
-        '[?toggle <- Toggle (= e ?e)]
-        ['?eav '<- :todo/done '(= (:e this) ?e) '(= (:v this) ?v)]
-        '[:test (= ?e ?v)]
-        [:and [:or '[Toggle (> c ?e) (= d d?)]
-               [:todo/tag '(= (:v this) :project)]]
-         '[Toggle (< b ?e)]]
-        '=> '(insert! [?e :todo/done (not ?v)])))
+  '({:salience 100}
+     [Toggle (= e ?e)]
+     [:eav/all]
+     [:eav/all (= (:e this) :eav/transient)]
+     [:todo/done (= (:e this) ?e) (= (:v this) ?v)]
+     [?toggle <- Toggle (= e ?e)]
+     [?eav <- :todo/done (= (:e this) ?e) (= (:v this) ?v)]
+     [:test (= ?e ?v)]
+     [:and [:or [Toggle (> c ?e) (= d d?)]
+            [:todo/tag (= (:v this) :project)]]
+      [Toggle (< b ?e)]]
+     =>
+     (insert! [?e :todo/done (not ?v)])))
 
 (deftest transform-rule-test
   (testing "Transforms fact-eav to fact-clara in rule forms"
@@ -115,17 +117,17 @@
       [Toggle (< b ?e)]]))
 
 (def defquery-clara
-  (list '[:?d]
-        '[Toggle (= e ?e)]
-        [:eav/all]
-        [:eav/all '(= (:e this) :eav/transient)]
-        [:todo/done '(= (:e this) ?e) '(= (:v this) ?v)]
-        '[?toggle <- Toggle (= e ?e)]
-        ['?eav '<- :todo/done '(= (:e this) ?e) '(= (:v this) ?v)]
-        '[:test (= ?e ?v)]
-        [:and [:or '[Toggle (> c ?e) (= d d?)]
-               [:todo/tag '(= (:v this) :project)]]
-         '[Toggle (< b ?e)]]))
+  '([:?d]
+     [Toggle (= e ?e)]
+     [:eav/all]
+     [:eav/all (= (:e this) :eav/transient)]
+     [:todo/done (= (:e this) ?e) (= (:v this) ?v)]
+     [?toggle <- Toggle (= e ?e)]
+     [?eav <- :todo/done (= (:e this) ?e) (= (:v this) ?v)]
+     [:test (= ?e ?v)]
+     [:and [:or [Toggle (> c ?e) (= d d?)]
+            [:todo/tag (= (:v this) :project)]]
+      [Toggle (< b ?e)]]))
 
 (deftest transform-query-test
   (testing "Transforms fact-eav to fact-clara in query forms"

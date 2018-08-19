@@ -10,7 +10,7 @@ to the attribute (EAV triplet). Updating an n-tuple requires retraction and
 re-insertion of the whole tuple. The downside is extra joins are needed to build 
 back an entity from it's constituent EAVs.
 
-[![CircleCI](https://circleci.com/gh/clyfe/clara-eav.svg?style=svg)](https://circleci.com/gh/clyfe/clara-eav)
+[![CircleCI](https://circleci.com/gh/clyfe/clara-eav.svg?style=shield)](https://circleci.com/gh/clyfe/clara-eav)
 
 ## Installation
 
