@@ -1,4 +1,9 @@
-## About
+[![Clojars](https://img.shields.io/clojars/v/clyfe/clara-eav.svg)](https://clojars.org/clyfe/clara-eav)
+[![Cljdoc](https://cljdoc.xyz/badge/clyfe/clara-eav)](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT)
+[![CircleCI](https://circleci.com/gh/clyfe/clara-eav.svg?style=shield)](https://circleci.com/gh/clyfe/clara-eav)
+[![codecov](https://codecov.io/gh/clyfe/clara-eav/branch/master/graph/badge.svg)](https://codecov.io/gh/clyfe/clara-eav)
+
+#### About
 
 ClaraEAV is a thin layer over Clara-Rules API that simplifies working with
 [EAV triplets](https://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model),
@@ -10,20 +15,16 @@ to the attribute (EAV triplet). Updating an n-tuple requires retraction and
 re-insertion of the whole tuple. The downside is extra joins are needed to build 
 back an entity from it's constituent EAVs.
 
-[![CircleCI](https://circleci.com/gh/clyfe/clara-eav.svg?style=shield)](https://circleci.com/gh/clyfe/clara-eav)
+#### Installation
 
-## Installation
+ClaraEAV releases are on [clojars](https://clojars.org/clyfe/clara-eav).
 
-ClaraEAV releases are on Clojars:
-
-[![Clojars Project](https://img.shields.io/clojars/v/clyfe/clara-eav.svg)](https://clojars.org/clyfe/clara-eav)
-
-## Usage
+#### Usage
 
 You should be familiar with [Clara Rules](https://www.clara-rules.org) before 
-using ClaraEAV. See the documentation including the usage guide on Cljdoc:
-
-[![cljdoc badge](https://cljdoc.xyz/badge/clyfe/clara-eav)](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT)
+using ClaraEAV. See the documentation, including the 
+[guide](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT/doc/guide), on 
+[cljdoc](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT). Sample:
 
 ```clojure
 (ns sample
@@ -49,7 +50,7 @@ using ClaraEAV. See the documentation including the usage guide on Cljdoc:
 ; ({:?e :new, :?todo #:todo{:db/id :new, :text "...", :done false}})
 ```
 
-## Credits
+#### Credits
 
 * [Clara Rules](http://www.clara-rules.org/) the library this is built on
 * [Precept](https://github.com/CoNarrative/precept) the origin of all ideas

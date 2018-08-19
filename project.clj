@@ -7,7 +7,8 @@
                  [medley "1.0.0"]
                  [com.cerner/clara-rules "0.18.0"]]
   :plugins [[lein-cljsbuild "1.1.7" :exclusions [org.clojure/clojure]]
-            [lein-doo "0.1.10" :exclusions [org.clojure/clojure]]]
+            [lein-doo "0.1.10" :exclusions [org.clojure/clojure]]
+            [lein-cloverage "1.0.13"]]
   :codox {:metadata {:doc/format :markdown}}
   :doo {:paths {:rhino "lein run -m org.mozilla.javascript.tools.shell.Main"}}
   
