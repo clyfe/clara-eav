@@ -1,7 +1,8 @@
 [![Clojars](https://img.shields.io/clojars/v/clyfe/clara-eav.svg)](https://clojars.org/clyfe/clara-eav)
 [![Cljdoc](https://cljdoc.xyz/badge/clyfe/clara-eav)](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT)
 [![CircleCI](https://circleci.com/gh/clyfe/clara-eav.svg?style=shield)](https://circleci.com/gh/clyfe/clara-eav)
-[![codecov](https://codecov.io/gh/clyfe/clara-eav/branch/master/graph/badge.svg)](https://codecov.io/gh/clyfe/clara-eav)
+[![Codecov](https://codecov.io/gh/clyfe/clara-eav/branch/master/graph/badge.svg)](https://codecov.io/gh/clyfe/clara-eav)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/clyfe/clara-eav/blob/master/LICENSE)
 
 #### About
 

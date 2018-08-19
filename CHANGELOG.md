@@ -3,6 +3,9 @@
 ### [Unreleased]
 #### Changed
 - Minor code refactor to rules namespace and test, and dsl test.
+#### Added
+- Added code coverage via lein-cloverage
+- Added MIT license badge
 
 ### [0.1.5] - 2018-08-17
 #### Removed
