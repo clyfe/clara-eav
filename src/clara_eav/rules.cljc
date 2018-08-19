@@ -63,8 +63,7 @@
       :store (store/state store))))
 
 (s/fdef retract!
-  :args (s/cat :tx ::eav/tx)
-  :ret ::session/session)
+  :args (s/cat :tx ::eav/tx))
 (defn retract!
   "Like Clara-Rules retract!; tx is transaction data with no tempids."
   [tx]
@@ -82,7 +81,8 @@
   :ret ::session/session)
 (defn upsert
   "Similar to Clara-Rules insert-all; tx is transaction data. Retracts EAVs that
-  have the same eid and attribute but with a new value."
+  have the same eid and attribute but with a new value. The returned session has
+  an extra `:tempids` key with the resolved tempids map {tempid -> eid}."
   [session tx]
   (let [{:keys [insertables retractables tempids]
          :as store} (store/+eavs (:store session) (eav/eav-seq tx))]
@@ -93,8 +93,7 @@
 
 (s/fdef upsert!*
   :args (s/cat :tx ::eav/tx
-               :unconditional boolean?)
-  :ret ::session/session)
+               :unconditional boolean?))
 (defn- upsert!*
   [tx unconditional]
   (let [{:keys [insertables retractables]
@@ -106,8 +105,7 @@
       (engine/insert-facts! insertables unconditional))))
 
 (s/fdef upsert!
-  :args (s/cat :tx ::eav/tx)
-  :ret ::session/session)
+  :args (s/cat :tx ::eav/tx))
 (defn upsert!
   "Similar to Clara-Rules insert-all!; tx is transaction data. Retracts EAVs
   that have the same eid and attribute but come with a new value."
@@ -115,8 +113,7 @@
   (upsert!* tx false))
 
 (s/fdef upsert-unconditional!
-  :args (s/cat :tx ::eav/tx)
-  :ret ::session/session)
+  :args (s/cat :tx ::eav/tx))
 (defn upsert-unconditional!
   "Similar to Clara-Rules insert-all-unconditional!; tx is transaction data.
   Retracts EAVs that have the same eid and attribute but with a new value."

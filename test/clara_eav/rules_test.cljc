@@ -79,7 +79,7 @@
   (-> (eav.rules/retract session tx)
       (rules/fire-rules)))
 
-(deftest upsert-accumulate-test
+(deftest upsert-retract-accumulate-test
   (testing "Upsert, retract, accumulate entities"
     (let [session1 (upsert session [new1 milk1 eggs1])
           store1s {:max-eid 3

@@ -4,10 +4,11 @@
 #### Changed
 - Minor code refactor to rules namespace and test, and dsl test.
 - Fixed grammar errors in guide.md
+- Fixed rules specs and updated upsert docstring.
 #### Added
-- Added code coverage via lein-cloverage
-- Added MIT license badge
-- Added project url
+- Added code coverage via lein-cloverage.
+- Added MIT license badge.
+- Added project url.
 
 ### [0.1.5] - 2018-08-17
 #### Removed
