@@ -55,9 +55,9 @@ upsert semantics, and absence in results insert semantics.
 
 #### Tempids
 
-A string eid designates a tempid and so does a negative int. A tempid is a used
-in upserts as placeholder to be be replaced with with unique eids generated from
-a per-session integer sequence. In the same transaction data, EAVs with the same
+A string eid designates a tempid and so does a negative int. A tempid is used in
+upserts as placeholder to be replaced with with unique eids generated from a
+per-session integer sequence. In the same transaction data, EAVs with the same
 tempid will be saved with the same eid. Tempids are not allowed in retractions.
 
 ```clojure
@@ -99,7 +99,7 @@ following fact pairs are equivalent (notice the extra `[]` vector brackets):
                                                (= (:a this) ?a) 
                                                (= (:v this) ?v)]
 
-[?x <- accum :from [[_]] => [?x <- accumulator :from [:eav/all]]
+[?x <- accumulator :from [[_]] => [?x <- accumulator :from [:eav/all]]
 ```
 
 Keywords can be also be used as types, and they match the EAVs attribute. The 

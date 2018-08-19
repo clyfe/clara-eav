@@ -8,7 +8,8 @@
 
 ClaraEAV is a thin layer over Clara-Rules API that simplifies working with
 [EAV triplets](https://en.wikipedia.org/wiki/Entity%E2%80%93attribute%E2%80%93value_model),
-similar to [Triplestores](https://en.wikipedia.org/wiki/Triplestore).
+similar to [Triplestores](https://en.wikipedia.org/wiki/Triplestore). It works
+with both Clojure and ClojureScript.
 
 The main benefit of EAV triplets over Clara's default n-tuples (arbitrary
 records) is that updates (equivalent to a retraction and an insertion) are local
@@ -18,14 +19,14 @@ back an entity from it's constituent EAVs.
 
 #### Installation
 
-ClaraEAV releases are on [clojars](https://clojars.org/clyfe/clara-eav).
+ClaraEAV releases are on [Clojars](https://clojars.org/clyfe/clara-eav).
 
 #### Usage
 
 You should be familiar with [Clara Rules](https://www.clara-rules.org) before 
 using ClaraEAV. See the documentation, including the 
-[guide](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT/doc/guide), on 
-[cljdoc](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT). Sample:
+[Guide](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT/doc/guide), on 
+[Cljdoc](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT). Sample:
 
 ```clojure
 (ns sample
