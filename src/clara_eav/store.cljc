@@ -87,19 +87,20 @@
   resolved `:tempids` map of {tempid -> eid}."
   [store eav]
   (let [{:keys [tempids max-eid eav-index]} store
-        {:keys [e a v]} eav]
+        {:keys [e a v]} eav
+        transient? (= :eav/transient a)]
     (if (tempid? e)
       (if-some [eid (get tempids e)]
         (-> store
             (update :insertables conj (assoc eav :e eid))
-            (assoc-in [:eav-index eid a] v))
+            (cond-> (not transient?) (assoc-in [:eav-index eid a] v)))
         (let [new-eid (inc max-eid)]
           (-> store
               (update :insertables conj (assoc eav :e new-eid))
               (assoc-in [:tempids e] new-eid)
               (assoc :max-eid new-eid)
-              (assoc-in [:eav-index new-eid a] v))))
-      (if (= :eav/transient a)
+              (cond-> (not transient?) (assoc-in [:eav-index new-eid a] v)))))
+      (if transient?
         (update store :insertables conj eav)
         (if-some [v' (get-in eav-index [e a])]
           (cond-> store

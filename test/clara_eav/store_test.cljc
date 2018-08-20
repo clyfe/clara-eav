@@ -43,7 +43,8 @@
    (eav/->EAV -3 :todo/tag :ham)
    (eav/->EAV 1 :todo/text "Buy cheese")
    (eav/->EAV 1 :todo/tag :cheese)
-   (eav/->EAV :do :eav/transient "something")])
+   (eav/->EAV :do :eav/transient "something")
+   (eav/->EAV -9 :eav/transient "something")])
 
 (def insertables'
   [(eav/->EAV 2 :todo/text "Buy milk")
@@ -53,14 +54,16 @@
    (eav/->EAV 3 :todo/tag :ham)
    (eav/->EAV 1 :todo/text "Buy cheese")
    (eav/->EAV 1 :todo/tag :cheese)
-   (eav/->EAV :do :eav/transient "something")])
+   (eav/->EAV :do :eav/transient "something")
+   (eav/->EAV 4 :eav/transient "something")])
 
 (def retractables'
   [(eav/->EAV 1 :todo/tag :not-cheese)])
 
 (def tempids'
   {"todo1-id" 2
-   -3 3})
+   -3 3
+   -9 4})
 
 (def eav-index'
   {0 #:todo{:tag :eggs
@@ -86,6 +89,6 @@
     (is (= {:insertables insertables'
             :retractables retractables'
             :tempids tempids'
-            :max-eid 3
+            :max-eid 4
             :eav-index eav-index'}
            (store/+eavs store eavs)))))

@@ -9,6 +9,7 @@
 - Added code coverage via lein-cloverage.
 - Added MIT license badge.
 - Added project url.
+- Added support for tempids in transient eavs
 
 ### [0.1.5] - 2018-08-17
 #### Removed
