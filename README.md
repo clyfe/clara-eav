@@ -26,7 +26,8 @@ ClaraEAV releases are on [Clojars](https://clojars.org/clyfe/clara-eav).
 You should be familiar with [Clara Rules](https://www.clara-rules.org) before 
 using ClaraEAV. See the documentation, including the 
 [Guide](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT/doc/guide), on 
-[Cljdoc](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT). Sample:
+[Cljdoc](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT). For a more complete
+example see the [rules test](test/clara_eav/rules_test.cljc).
 
 ```clojure
 (ns sample

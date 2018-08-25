@@ -47,12 +47,7 @@
          (s/cat ::bind (s/? ::bind)
                 ::bind-arrow (s/? #{'<-})
                 ::eav ::eav)))
-(s/def ::e #(or (keyword? %)
-                (integer? %)
-                (symbol? %)))
-(s/def ::a #(or (keyword? %)
-                (symbol? %)))
-(s/def ::v some?)
+
 (s/def ::eav
   (s/and vector?
          (s/conformer vec vec)
@@ -60,6 +55,13 @@
          (s/or ::eav1 (s/cat ::e ::e)
                ::eav2 (s/cat ::e ::e, ::a ::a)
                ::eav3 (s/cat ::e ::e, ::a ::a, ::v ::v))))
+
+(s/def ::e #(or (keyword? %)
+                (integer? %)
+                (symbol? %)))
+(s/def ::a #(or (keyword? %)
+                (symbol? %)))
+(s/def ::v some?)
 
 (s/def ::sexp list?)
 (s/def ::bind symbol?)
@@ -110,7 +112,7 @@
     [::fact-eav fact-eav] [::fact-clara (fact fact-eav)]
     :else node))
 
-(defn transform
+(defn- transform
   "Convert the ClaraEAV form containing triplets to plain Clara rule based on 
   the EAV type by walking each node of the input using prewalk and replacing 
   `::fact-eav` nodes with `::fact-clara` nodes."

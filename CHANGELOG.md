@@ -3,28 +3,33 @@
 ### [Unreleased]
 #### Changed
 - Minor code refactor to rules namespace and test, and dsl test.
-- Fixed grammar errors in guide.md
+- Fixed grammar errors in the guide.
 - Fixed rules specs and updated upsert docstring.
+- Made clara-eav.eav namespace public.
+- Minor docs rewording.
+- Commands should be namespaced keywords, rules test now reflects that.
+- Made dsl/transform private
 #### Added
-- Added code coverage via lein-cloverage.
-- Added MIT license badge.
-- Added project url.
-- Added support for tempids in transient eavs
+- Code coverage via lein-cloverage.
+- MIT license badge.
+- Project url.
+- Support for tempids in transient eavs.
+- Tests for tempids resolution being returned. 
 
 ### [0.1.5] - 2018-08-17
 #### Removed
-- Removed codox and cljfmt from lein plugins list.
+- Codox and Cljfmt from lein plugins list.
 #### Added
-- Added CircleCI
-- Added missing 0.1.4 changelog entry.
+- CircleCI integration.
+- Missing 0.1.4 changelog entry.
 
 ### [0.1.4] - 2018-08-17
 #### Added
-- Added a spec instrumentation in tests.
+- Spec instrumentation in tests.
 
 ### [0.1.3] - 2018-08-17
 #### Added
-- Added a changelog, regenerated docs.
+- Changelog, regenerated docs.
 
 ### [0.1.2] - 2018-08-17
 #### Changed

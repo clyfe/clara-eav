@@ -1,4 +1,4 @@
-(ns ^:no-doc clara-eav.eav
+(ns clara-eav.eav
   "This namespace is about defining EAVs and converting to EAVs from various 
   representations (mainly from an entity map)."
   (:require

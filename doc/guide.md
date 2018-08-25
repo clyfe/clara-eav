@@ -19,14 +19,15 @@ normally operated by Clara can still be used alongside in the same session. The
 equivalence between n-tuples and triplets is illustrated below:
 
 ```clojure
-;; Sample N-tuple (4-tuple): a todo with 4 positions 
-#:todo{:db/id 1, :text "Buy milk", :done false, :tag :buy}
+;; Sample N-tuple (4-tuple): a todo with 4 positions
+(defrecord Todo [text done tag priority])
+(map->Todo {:text "Buy milk", :done false, :tag :buy, :priority 3})
 
 ;; EAVs list (triplets list) equivalent to the n-tuple above
-[[1 :db/id 1]
- [1 :todo/text "Buy milk"]
- [1 :todo/done false]
- [1 :todo/tag :buy]]
+[[234 :todo/text "Buy milk"]
+ [234 :todo/done false]
+ [234 :todo/tag :buy]
+ [234 :priority 3]]
 ```
 
 EAVs are of type record `clara_eav.eav.EAV` and can be destructured as 3-valued 
@@ -46,7 +47,8 @@ Transaction data (tx) is what functions usually work with (upsert/retract).
 Since we use the generic "transaction data" concept, there is no -all- variants 
 for upserts like in Clara, and standard upsert can be used for all cases.
 
-The "e" position we sometimes name :db/id, **eid** or entity id.
+The "e" position we sometimes name **eid** or entity id. In an entity map form
+it is the :db/id position.
 
 EAVs with the same eid form entity maps, their attributes (a) and values (v)
 being keys and values in the entity map, and :db/id being a key in the entity
@@ -61,10 +63,21 @@ per-session integer sequence. In the same transaction data, EAVs with the same
 tempid will be saved with the same eid. Tempids are not allowed in retractions.
 
 ```clojure
-;; The transaction data
-[["x" :a 1]["x" :b 2]["y" :a 3]["y" :b 4][-8 :a 5][-8 :b 6]]
-;; on upsert becomes
-[[1 :a 1][1 :b 2][2 :a 3][2 :b 4][3 :a 5][3 :b 6]]
+;; The transaction data:
+[["x" :a 1]
+ ["x" :b 2]
+ ["y" :a 3]
+ ["y" :b 4]
+ [-8 :a 5]
+ [-8 :b 6]]
+
+;; on upsert becomes:
+[[1 :a 1]
+ [1 :b 2]
+ [2 :a 3]
+ [2 :b 4]
+ [3 :a 5]
+ [3 :b 6]]
 ```
 
 #### Transient EAVs 

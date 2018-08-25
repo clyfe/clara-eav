@@ -9,6 +9,8 @@
 
 (use-fixtures :once test-helper/spec-fixture)
 
+;; Entity maps
+
 (def new1 #:todo{:db/id :new :text "..." :done false})
 (def milk1 #:todo{:text "Buy milk" :done false})
 (def eggs1 #:todo{:text "Buy eggs" :done true})
@@ -24,15 +26,7 @@
 (def toast5 #:todo{:db/id "toast-tempid" :text "Buy toast" :done true})
 (def jam5 #:todo{:db/id -7 :text "Buy jam" :done true})
 
-(eav.rules/defquery todo-q [:?e]
-  [?todo <- eav.rules/entity :from [[?e]]])
-
-(eav.rules/defquery todos-q []
-  [[?e :todo/text]]
-  [?todos <- eav.rules/entities :from [[?e]]])
-
-(eav.rules/defquery transients-q []
-  [?transient <- [:eav/transient]])
+;; Rules
 
 (eav.rules/defrule milk-and-flakes-r
   [[_ :todo/text "Buy milk"]]
@@ -45,13 +39,29 @@
   (eav.rules/upsert! [cookie-a cookie-b]))
 
 (eav.rules/defrule remove-r
-  [[:remove :eav/transient ?e]]
+  [[::remove :eav/transient ?e]]
   [?eav <- [?e ?a ?v]]
   =>
   (eav.rules/retract! ?eav))
 
+;; Queries
+
+(eav.rules/defquery todo-q [:?e]
+  [?todo <- eav.rules/entity :from [[?e]]])
+
+(eav.rules/defquery todos-q []
+  [[?e :todo/text]]
+  [?todos <- eav.rules/entities :from [[?e]]])
+
+(eav.rules/defquery transients-q []
+  [?transient <- :eav/transient])
+
+;; Session
+
 (eav.rules/defsession session
   'clara-eav.rules-test)
+
+;; Helpers
 
 (defn todo
   [session ?e]
@@ -79,11 +89,20 @@
   (-> (eav.rules/retract session tx)
       (rules/fire-rules)))
 
+;; Tests
+
 (deftest upsert-retract-accumulate-test
   (testing "Upsert, retract, accumulate entities"
-    (let [session1 (upsert session [new1 milk1 eggs1])
+    (let [
+          ;; - upsert via call
+          ;; - upsert-unconditional! via milk-and-flakes-r rule
+          ;; - entity accumulator via todo-q query
+          ;; - entities accumulator via todos-q query
+          ;; - store maintenance
+          session1 (upsert session [new1 milk1 eggs1])
+          new1' (dissoc new1 :db/id)
           store1s {:max-eid 3
-                   :eav-index {:new (dissoc new1 :db/id)
+                   :eav-index {:new new1'
                                1 milk1
                                2 eggs1
                                3 flakes}}
@@ -96,10 +115,17 @@
               all1 (todos session1)
               store1s (:store session1))
 
+          ;; - upsert via call
+          ;; - upsert! via milk2-and-cookies-r rule
+          ;; - entity accumulator via todo-q query
+          ;; - entities accumulator via todos-q query
+          ;; - store maintenance
           session2 (upsert session1 [new2 milk2 ham2])
+          new2' (dissoc new2 :db/id)
+          milk2' (dissoc milk2 :db/id)
           store2s {:max-eid 6
-                   :eav-index {:new (dissoc new2 :db/id)
-                               1 (dissoc milk2 :db/id)
+                   :eav-index {:new new2'
+                               1 milk2'
                                2 eggs1
                                3 flakes
                                4 ham2
@@ -115,9 +141,13 @@
               all2 (todos session2)
               store2s (:store session2))
 
+          ;; - retract via call
+          ;; - entity accumulator via todo-q query
+          ;; - entities accumulator via todos-q query
+          ;; - store maintenance
           session3 (retract session2 [new2 eggs3])
           store3s {:max-eid 6
-                   :eav-index {1 (dissoc milk2 :db/id)
+                   :eav-index {1 milk2'
                                3 flakes
                                4 ham2
                                5 cookie-a
@@ -128,10 +158,15 @@
               all3 (todos session3)
               store3s (:store session3))
 
-          session4 (upsert session3 [[:remove :eav/transient 5]
-                                     [:remove :eav/transient 6]])
+          ;; - upsert transient via call
+          ;; - retract! via remove-r rule
+          ;; - eav binding via transients-q query
+          ;; - entities accumulator via todos-q query
+          ;; - store maintenance
+          session4 (upsert session3 [[::remove :eav/transient 5]
+                                     [::remove :eav/transient 6]])
           store4s {:max-eid 6
-                   :eav-index {1 (dissoc milk2 :db/id)
+                   :eav-index {1 milk2'
                                3 flakes
                                4 ham2}}
           all4 (list flakes1s milk2 ham2s)
@@ -140,17 +175,27 @@
               [] (transients session4)
               store4s (:store session4))
 
+          ;; - upsert via call
+          ;; - tempids (string and negative int) resolution
+          ;; - eav binding via transients-q query
+          ;; - entities accumulator via todos-q query
+          ;; - store maintenance
           session5 (upsert session4 [toast5 jam5])
+          toast5' (dissoc toast5 :db/id)
+          jam5' (dissoc jam5 :db/id)
           store5s {:max-eid 8
-                   :eav-index {1 (dissoc milk2 :db/id)
+                   :eav-index {1 milk2'
                                3 flakes
                                4 ham2
-                               7 (dissoc toast5 :db/id)
-                               8 (dissoc jam5 :db/id)}}
+                               7 toast5'
+                               8 jam5'}}
           toast5s (assoc toast5 :db/id 7)
           jam5s (assoc jam5 :db/id 8)
           all5 (list flakes1s milk2 ham2s jam5s toast5s)
+          tempids5s {"toast-tempid" 7
+                     -7 8}
           _ (are [x y] (= x y)
               (set all5) (set (todos session5))
               [] (transients session5)
-              store5s (:store session5))])))
+              store5s (:store session5)
+              tempids5s (:tempids session5))])))

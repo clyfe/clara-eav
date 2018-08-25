@@ -101,7 +101,7 @@
 
 (deftest transform-rule-test
   (testing "Transforms fact-eav to fact-clara in rule forms"
-    (is (= defrule-clara (dsl/transform ::dsl/defrule defrule-eav)))))
+    (is (= defrule-clara (#'dsl/transform ::dsl/defrule defrule-eav)))))
 
 (def defquery-eav
   '([:?d]
@@ -131,4 +131,4 @@
 
 (deftest transform-query-test
   (testing "Transforms fact-eav to fact-clara in query forms"
-    (is (= defquery-clara (dsl/transform ::dsl/defquery defquery-eav)))))
+    (is (= defquery-clara (#'dsl/transform ::dsl/defquery defquery-eav)))))

@@ -86,10 +86,11 @@
   [session tx]
   (let [{:keys [insertables retractables tempids]
          :as store} (store/+eavs (:store session) (eav/eav-seq tx))]
-    (cond-> (assoc session :store (store/state store))
+    (cond-> session
             (seq retractables) (engine/retract retractables)
             (seq insertables) (engine/insert insertables)
-            (seq tempids) (assoc :tempids tempids))))
+            true (assoc :store (store/state store)
+                        :tempids tempids))))
 
 (s/fdef upsert!*
   :args (s/cat :tx ::eav/tx

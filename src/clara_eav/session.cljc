@@ -18,10 +18,12 @@
   (fire-rules [this]
     (engine/fire-rules this {}))
 
-  (fire-rules [_this opts]
+  (fire-rules [this opts]
     (binding [store/*store* (atom store)]
-      (let [session' (engine/fire-rules session opts)]
-        (SessionWrapper. session' @store/*store*))))
+      (let [tempids (:tempids this)
+            session' (engine/fire-rules session opts)]
+        (cond-> (SessionWrapper. session' @store/*store*)
+                (seq tempids) (assoc :tempids tempids)))))
 
   (query [_this query params]
     (engine/query session query params))
