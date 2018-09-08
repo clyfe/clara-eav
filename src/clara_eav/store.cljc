@@ -54,7 +54,7 @@
                :eav ::eav/record)
   :ret ::store-tx)
 (defn- -eav
-  "Substracts `eav` from `store` updating it's `:eav-index`. Returns the updated 
+  "Subtracts `eav` from `store` updating it's `:eav-index`. Returns the updated
   `store` including `:retractables` eavs."
   [store eav]
   (let [{:keys [e a]} eav]

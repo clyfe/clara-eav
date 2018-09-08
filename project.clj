@@ -1,4 +1,4 @@
-(defproject clyfe/clara-eav "0.1.6-SNAPSHOT"
+(defproject clyfe/clara-eav "0.1.6"
   :description "EAV triplets for Clara Rules"
   :url         "https://github.com/clyfe/clara-eav"
   :license      {:name "MIT"

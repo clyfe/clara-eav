@@ -1,6 +1,8 @@
 ## Changelog
 
 ### [Unreleased]
+
+### [0.1.6] - 2018-09-08
 #### Changed
 - Minor code refactor to rules namespace and test, and dsl test.
 - Fixed grammar errors in the guide.
