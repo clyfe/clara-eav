@@ -73,13 +73,13 @@
   :ret ::record-seq)
 (defn- entity->eav-seq
   "Transforms an `entity` map into a list of EAVs. If the `entity` has a
-  `:db/id` (set to non-tempid) subsequent operations will have upsert
-  semantics. If not, a `:db/id` is generated as a tempid and subsequent 
+  `:eav/eid` (set to non-tempid) subsequent operations will have upsert
+  semantics. If not, a `:eav/eid` is generated as a tempid and subsequent
   operations will have insert semantics."
   [entity]
-  (let [e (:db/id entity (tempid))
+  (let [e (:eav/eid entity (tempid))
         ->eav (fn [[k v]] (->EAV e k v))
-        entity' (dissoc entity :db/id)]
+        entity' (dissoc entity :eav/eid)]
     (map ->eav entity')))
 
 (s/fdef eav-seq

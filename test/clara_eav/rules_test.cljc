@@ -5,26 +5,27 @@
             [clojure.test :refer [deftest testing is are use-fixtures]]]
         :cljs [[clara.rules :as rules :include-macros true]
                [clara-eav.rules :as eav.rules :include-macros true]
-               [cljs.test :refer-macros [deftest testing is are use-fixtures]]])))
+               [cljs.test :refer-macros [deftest testing is are
+                                         use-fixtures]]])))
 
 (use-fixtures :once test-helper/spec-fixture)
 
 ;; Entity maps
 
-(def new1 #:todo{:db/id :new :text "..." :done false})
+(def new1 #:todo{:eav/eid :new :text "..." :done false})
 (def milk1 #:todo{:text "Buy milk" :done false})
 (def eggs1 #:todo{:text "Buy eggs" :done true})
 (def flakes #:todo{:text "Buy flakes" :done false})
 
 (def new2 (assoc new1 :todo/text "!!!"))
-(def milk2 (assoc milk1 :db/id 1, :todo/text "Buy milk2"))
-(def eggs2 (assoc eggs1 :db/id 2))
+(def milk2 (assoc milk1 :eav/eid 1, :todo/text "Buy milk2"))
+(def eggs2 (assoc eggs1 :eav/eid 2))
 (def ham2 #:todo{:text "Buy ham" :done false})
 (def cookie-a #:todo{:text "Buy cookie a" :done false})
 (def cookie-b #:todo{:text "Buy cookie b" :done false})
 
-(def toast5 #:todo{:db/id "toast-tempid" :text "Buy toast" :done true})
-(def jam5 #:todo{:db/id -7 :text "Buy jam" :done true})
+(def toast5 #:todo{:eav/eid "toast-tempid" :text "Buy toast" :done true})
+(def jam5 #:todo{:eav/eid -7 :text "Buy jam" :done true})
 
 ;; Rules
 
@@ -100,15 +101,15 @@
           ;; - entities accumulator via todos-q query
           ;; - store maintenance
           session1 (upsert session [new1 milk1 eggs1])
-          new1' (dissoc new1 :db/id)
+          new1' (dissoc new1 :eav/eid)
           store1s {:max-eid 3
                    :eav-index {:new new1'
                                1 milk1
                                2 eggs1
                                3 flakes}}
-          milk1s (assoc milk1 :db/id 1)
-          eggs1s (assoc eggs1 :db/id 2)
-          flakes1s (assoc flakes :db/id 3)
+          milk1s (assoc milk1 :eav/eid 1)
+          eggs1s (assoc eggs1 :eav/eid 2)
+          flakes1s (assoc flakes :eav/eid 3)
           all1 (list new1 milk1s eggs1s flakes1s)
           _ (are [x y] (= x y)
               new1 (todo session1 :new)
@@ -121,8 +122,8 @@
           ;; - entities accumulator via todos-q query
           ;; - store maintenance
           session2 (upsert session1 [new2 milk2 ham2])
-          new2' (dissoc new2 :db/id)
-          milk2' (dissoc milk2 :db/id)
+          new2' (dissoc new2 :eav/eid)
+          milk2' (dissoc milk2 :eav/eid)
           store2s {:max-eid 6
                    :eav-index {:new new2'
                                1 milk2'
@@ -131,11 +132,11 @@
                                4 ham2
                                5 cookie-a
                                6 cookie-b}}
-          ham2s (assoc ham2 :db/id 4)
-          cookie-as (assoc cookie-a :db/id 5)
-          cookie-bs (assoc cookie-b :db/id 6)
+          ham2s (assoc ham2 :eav/eid 4)
+          cookie-as (assoc cookie-a :eav/eid 5)
+          cookie-bs (assoc cookie-b :eav/eid 6)
           all2 (list eggs2 flakes1s new2 milk2 ham2s cookie-as cookie-bs)
-          eggs3 (assoc eggs1 :db/id 2)
+          eggs3 (assoc eggs1 :eav/eid 2)
           _ (are [x y] (= x y)
               new2 (todo session2 :new)
               all2 (todos session2)
@@ -181,16 +182,16 @@
           ;; - entities accumulator via todos-q query
           ;; - store maintenance
           session5 (upsert session4 [toast5 jam5])
-          toast5' (dissoc toast5 :db/id)
-          jam5' (dissoc jam5 :db/id)
+          toast5' (dissoc toast5 :eav/eid)
+          jam5' (dissoc jam5 :eav/eid)
           store5s {:max-eid 8
                    :eav-index {1 milk2'
                                3 flakes
                                4 ham2
                                7 toast5'
                                8 jam5'}}
-          toast5s (assoc toast5 :db/id 7)
-          jam5s (assoc jam5 :db/id 8)
+          toast5s (assoc toast5 :eav/eid 7)
+          jam5s (assoc jam5 :eav/eid 8)
           all5 (list flakes1s milk2 ham2s jam5s toast5s)
           tempids5s {"toast-tempid" 7
                      -7 8}

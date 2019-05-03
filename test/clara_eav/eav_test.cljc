@@ -31,7 +31,7 @@
 
 (deftest ancestors-fn-test
   (testing "Ancestors of keyword."
-    (is (= [EAV :eav/all] (#'eav/ancestors-fn :db/id))))
+    (is (= [EAV :eav/all] (#'eav/ancestors-fn :eav/eid))))
   #?(:clj (testing "Ancestors of my record."
             (is (some #{Associative}
                       (#'eav/ancestors-fn MyRecord))))))
@@ -59,7 +59,7 @@
    :todo/done false})
 
 (def saved-todo
-  {:db/id 10
+  {:eav/eid 10
    :todo/text "Buy eggs"
    :todo/done true})
 

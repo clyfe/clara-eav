@@ -135,7 +135,7 @@
   (reduce (fn [entity [e' a v]]
             (assert-eids= e e')
             (assoc entity a v))
-          {:db/id e} eavs))
+          {:eav/eid e} eavs))
 
 (defn- groups->entities
   "Given a map of EAVs groups, grouped by eid, builds and returns the entities
