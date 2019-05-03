@@ -5,6 +5,8 @@
 - Merged Guide into README.
 - Renamed :db/id to :eav/eid.
 - Updated Clara-Rules dependency to 0.19.1 version.
+- Updated Clojure dependency to 1.10.0 version.
+- Updated ancillary dependencies to recent versions.
 
 ### [0.1.6] - 2018-09-08
 #### Changed
