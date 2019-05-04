@@ -32,23 +32,17 @@ The API docs are on [Cljdoc](https://cljdoc.xyz/d/clyfe/clara-eav/CURRENT).
 For a more complete example see [this test](test/clara_eav/rules_test.cljc).
 
 ```clojure
-(ns sample
+(ns my.sample
   (:require [clara.rules :as r]
             [clara-eav.rules :as er]))
 
 (er/defquery todo-q [:?e] 
   [?todo <- er/entity :from [[?e]]])
 
-(er/defsession session 
-  'sample)
-
-(def tx
-  #:todo{:eav/eid :new
-         :text "..."
-         :done false})
+(er/defsession session 'my.sample)
 
 (-> session
-    (er/upsert tx)
+    (er/upsert #:todo{:eav/eid :new, :text "...", :done false})
     (r/fire-rules)
     (r/query todo-q :?e :new))
 
@@ -244,7 +238,7 @@ Functions are somewhat similar with those in Clara.
              ["todo-id" :todo/done false]])
 
 ;; Same as previous in map form.
-(er/upsert! {:db/eid "todo-id"
+(er/upsert! {:eav/eid "todo-id"
              :todo/text "..."
              :todo/done false})
 

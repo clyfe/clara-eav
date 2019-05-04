@@ -12,4 +12,6 @@ pom.xml.asc
 .idea
 clara-eav.iml
 /.cljs_nashorn_repl
+/.cljs_rhino_repl
+/.cljs_node_repl
 /nashorn_code_cache
