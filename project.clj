@@ -21,9 +21,9 @@
 
   :profiles
   {:provided {:dependencies [[org.clojure/clojurescript "1.10.520"]]}
-   :test {:dependencies [[lein-cljsbuild "1.1.7"]
-                         [lein-doo "0.1.11" :exclusions [org.clojure/clojure]]
-                         [org.mozilla/rhino "1.7.10"]]
+   :test {:dependencies [[lein-doo "0.1.10" :exclusions [org.clojure/clojure]]
+                         [org.mozilla/rhino "1.7.10"]
+                         [org.clojure/test.check "0.10.0-alpha4"]]
           :cljsbuild {:builds [{:id "test"
                                 :source-paths ["src" "test"]
                                 :compiler {:output-to "target/main.js"
