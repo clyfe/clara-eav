@@ -1,6 +1,8 @@
 ## Changelog
 
 ### [Unreleased]
+
+### [0.1.7] - 2018-05-05
 #### Changed
 - Merged Guide into README.
 - Renamed :db/id to :eav/eid.
