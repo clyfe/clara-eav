@@ -276,6 +276,10 @@ them to the given variable.
   [?todos <- er/entities :from [[?e]])
 ```
 
+#### Pull API
+
+See the [Clara EQL](https://github.com/eraserhd/clara-eql) project, based on [EDN Query Language](https://github.com/edn-query-language/eql).
+
 ## Credits
 
 * [Clara Rules](http://www.clara-rules.org/) the library this is built on
