@@ -4,7 +4,8 @@
             [clara-eav.store :as store]
             [clara-eav.session :as session]
             #?(:clj [clojure.test :refer [deftest testing is are use-fixtures]]
-               :cljs [cljs.test :refer-macros [deftest testing is are use-fixtures]])))
+               :cljs [cljs.test :refer-macros [deftest testing is are
+                                               use-fixtures]])))
 
 (use-fixtures :once test-helper/spec-fixture)
 
@@ -31,7 +32,8 @@
 
   (testing "Session delegation"
     (let [calls (atom {})
-          session (spy calls (constantly true))
+          noop (fn [])
+          session (spy calls noop)
           wrapper (session/wrap session)]
       (are [x] (session/session? x)
         (engine/insert wrapper [])
@@ -39,16 +41,16 @@
         (engine/fire-rules wrapper)
         (engine/fire-rules wrapper {}))
       (engine/query wrapper 'some-query {})
-      (are [f c] (= (f @calls) c)
+      (are [f n] (= (f @calls) n)
         :insert 1
         :retract 1
         :query 1
         :fire-rules 2)))
 
   (testing "Store binding"
-    (let [binded? (fn [& _] (is (= store/init @store/*store*)))
+    (let [binded #(is (= store/init @store/*store*))
           calls (atom {})
-          session (spy calls binded?)
+          session (spy calls binded)
           wrapper (session/wrap session)]
       (engine/fire-rules wrapper)
       (is (= 1 (:fire-rules @calls))))))
