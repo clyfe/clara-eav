@@ -10,6 +10,7 @@ pom.xml.asc
 .hgignore
 .hg/
 .idea
+.cpcache/
 clara-eav.iml
 /.cljs_nashorn_repl
 /.cljs_rhino_repl
