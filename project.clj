@@ -3,13 +3,13 @@
   :url         "https://github.com/clyfe/clara-eav"
   :license      {:name "MIT"
                  :url "https://github.com/clyfe/clara-eav/blob/master/LICENSE"}
-  :dependencies [[org.clojure/clojure "1.10.0"]
-                 [org.clojure/core.match "0.3.0"]
-                 [medley "1.1.0"]
-                 [com.cerner/clara-rules "0.19.1"]]
-  :plugins [[lein-cljsbuild "1.1.7" :exclusions [org.clojure/clojure]]
-            [lein-doo "0.1.10" :exclusions [org.clojure/clojure]]
-            [lein-cloverage "1.0.13"]]
+  :dependencies [[org.clojure/clojure "1.10.1"]
+                 [org.clojure/core.match "1.0.0"]
+                 [medley "1.3.0"]
+                 [com.cerner/clara-rules "0.21.0"]]
+  :plugins [[lein-cljsbuild "1.1.8" :exclusions [org.clojure/clojure]]
+            [lein-doo "0.1.11" :exclusions [org.clojure/clojure]]
+            [lein-cloverage "1.2.1"]]
   :codox {:metadata {:doc/format :markdown}}
   :doo {:paths {:rhino "lein run -m org.mozilla.javascript.tools.shell.Main"}}
 
@@ -21,9 +21,8 @@
 
   :profiles
   {:provided {:dependencies [[org.clojure/clojurescript "1.10.520"]]}
-   :test {:dependencies [[lein-doo "0.1.10" :exclusions [org.clojure/clojure]]
-                         [org.mozilla/rhino "1.7.10"]
-                         [org.clojure/test.check "0.10.0-alpha4"]]
+   :test {:dependencies [[lein-doo "0.1.11" :exclusions [org.clojure/clojure]]
+                         [org.mozilla/rhino "1.7.13"]]
           :cljsbuild {:builds [{:id "test"
                                 :source-paths ["src" "test"]
                                 :compiler {:output-to "target/main.js"
