@@ -1,7 +1,8 @@
 (ns clara-eav.eav
-  "This namespace is about defining EAVs and converting to EAVs from various 
+  "This namespace is about defining EAVs and converting to EAVs from various
   representations (mainly from an entity map)."
   (:require
+    [medley.core :as medley]
    #?@(:clj [[clojure.spec.alpha :as s]
              [clojure.core.match :as match]]
        :cljs [[cljs.spec.alpha :as s]
@@ -37,13 +38,13 @@
     [EAV :eav/all]
     (ancestors type)))
 
-(s/def ::e #(or (string? %) 
+(s/def ::e #(or (string? %)
                 (keyword? %)
                 (int? %)
                 (uuid? %)))
 (s/def ::a keyword?)
 (s/def ::v some?)
-(s/def ::record (s/and #(instance? EAV %) 
+(s/def ::record (s/and #(instance? EAV %)
                        (s/keys :req-un [::e ::a ::v])))
 (s/def ::record-seq (s/coll-of ::record))
 (s/def ::vector (s/tuple ::e ::a ::v))
@@ -65,8 +66,7 @@
 (defn- tempid
   "Generates an uuid as a string to be used as a tempid for an entity map."
   []
-  (str #?(:clj (UUID/randomUUID)
-          :cljs (random-uuid))))
+  (str (medley/random-uuid)))
 
 (s/fdef entity->eav-seq
   :args (s/cat :entity ::entity)
