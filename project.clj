@@ -17,7 +17,7 @@
 
   :profiles
   {:provided {:dependencies [[org.clojure/clojurescript "1.10.520"]]}
-   :test {:cljsbuild {:test-commands {"nodejs" ["nodejs" "target/main.js"]}
+   :test {:cljsbuild {:test-commands {"node" ["node" "target/main.js"]}
                       :builds [{:id "test"
                                 :source-paths ["src" "test"]
                                 :compiler {:output-to "target/main.js"
