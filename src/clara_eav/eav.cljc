@@ -23,7 +23,7 @@
 
 (defn fact-type-fn
   "Clara-Rules `fact-type-fn` function for EAVs used in session creation.
-  The attribute `:a` of an EAV it's used as it's type."
+  The attribute `:a` of an EAV is used as it's type in Clara."
   [fact]
   (let [t (type fact)]
     (if (= EAV t)

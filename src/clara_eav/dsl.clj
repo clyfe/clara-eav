@@ -18,7 +18,9 @@
 
 (s/def ::defquery
   (s/cat ::docstring (s/? string?)
-         ::params (s/coll-of keyword? :kind vector?)
+         ::params (s/coll-of (s/or :symbol symbol?
+                                   :keyword keyword?)
+                             :kind vector?)
          ::lhs ::lhs))
 
 (s/def ::lhs (s/cat ::conditions (s/+ ::condition)))

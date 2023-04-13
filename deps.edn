@@ -1,10 +1,10 @@
 {:deps
- {org.clojure/clojure    {:mvn/version "1.10.1"}
-  org.clojure/core.match {:mvn/version "1.0.0"}
-  medley/medley          {:mvn/version "1.3.0"}
-  com.cerner/clara-rules {:mvn/version "0.21.0"}}
+ {org.clojure/clojure    {:mvn/version "1.11.1"}
+  org.clojure/core.match {:mvn/version "1.0.1"}
+  dev.weavejester/medley {:mvn/version "1.7.0"}
+  com.cerner/clara-rules {:mvn/version "0.21.2"}}
 
  :aliases
  {:test
   {:extra-paths ["test"]
-   :extra-deps {org.clojure/clojurescript {:mvn/version "1.10.520"}}}}}
+   :extra-deps {org.clojure/clojurescript {:mvn/version "1.11.60"}}}}}

@@ -11,6 +11,10 @@ pom.xml.asc
 .hg/
 .idea
 .cpcache/
+.lsp/
+.calva/
+.clj-kondo/
+.idea/
 clara-eav.iml
 /.cljs_nashorn_repl
 /.cljs_rhino_repl

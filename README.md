@@ -30,7 +30,7 @@ For a more complete example see [this test](test/clara_eav/rules_test.cljc).
   (:require [clara.rules :as r]
             [clara-eav.rules :as er]))
 
-(er/defquery todo-q [:?e] 
+(er/defquery todo-q [?e]
   [?todo <- er/entity :from [[?e]]])
 
 (er/defsession session 'my.sample)

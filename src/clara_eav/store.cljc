@@ -1,5 +1,8 @@
 (ns ^:no-doc clara-eav.store
-  "A store keeps track of max-eid and maintains an EAV index."
+  "A store is a subset of Datscript; it keeps track of max-eid for the sequence
+   of ints that resolve tempids; it also maintains an EAV index to efficiently
+   compute retractables on retract and insertables and retractables on upsert,
+   to be operated on Clara."
   (:require [clara-eav.eav :as eav]
             [medley.core :as medley]
     #?(:clj [clojure.spec.alpha :as s]
@@ -7,7 +10,7 @@
 
 (def ^:dynamic *store*
   "Dynamic atom of store to be used in rule productions, similar to other
-  mechanisms from Clara."
+  mechanisms from Clara like `clara.rules.engine/*current-session*`."
   nil)
 
 (s/def ::e
