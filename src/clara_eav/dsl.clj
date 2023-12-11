@@ -63,7 +63,7 @@
                 (symbol? %)))
 (s/def ::a #(or (keyword? %)
                 (symbol? %)))
-(s/def ::v some?)
+(s/def ::v any?)
 
 (s/def ::sexp list?)
 (s/def ::bind symbol?)

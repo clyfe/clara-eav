@@ -43,7 +43,7 @@
                 (int? %)
                 (uuid? %)))
 (s/def ::a keyword?)
-(s/def ::v some?)
+(s/def ::v any?)
 (s/def ::record (s/and #(instance? EAV %)
                        (s/keys :req-un [::e ::a ::v])))
 (s/def ::record-seq (s/coll-of ::record))
