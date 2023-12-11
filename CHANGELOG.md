@@ -1,6 +1,7 @@
 ## Changelog
 
 ### [Unreleased]
+- fixed upsert eav with value nil
 
 ### [0.1.7] - 2018-05-05
 #### Changed

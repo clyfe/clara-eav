@@ -1,5 +1,6 @@
 (ns clara-eav.rules-test
   (:require [clara-eav.test-helper :as test-helper]
+            [clara-eav.eav :as eav]
     #?@(:clj [[clara.rules :as rules]
             [clara-eav.rules :as eav.rules]
             [clojure.test :refer [deftest testing is are use-fixtures]]]
@@ -200,3 +201,14 @@
               [] (transients session5)
               store5s (:store session5)
               tempids5s (:tempids session5))])))
+
+(deftest upsert-nil-value
+  (testing "Upsert of eav with value nil"
+    (let [t {:eav/eid 1 :todo/text nil}
+          session1 (upsert session {:eav/eid 1 :todo/text nil})
+          session2 (upsert session (eav/->EAV 1 :todo/text nil))
+          session3 (upsert session [1 :todo/text nil])]
+      (are [x] (= t x)
+        (todo session1 1)
+        (todo session2 1)
+        (todo session3 1)))))
