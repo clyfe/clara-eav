@@ -46,6 +46,11 @@
   =>
   (eav.rules/retract! ?eav))
 
+(eav.rules/defrule with-nil-value-r
+  [[?e :todo/whatever nil]]
+  =>
+  (eav.rules/upsert! [?e :todo/nil-found 1]))
+
 ;; Queries
 
 (eav.rules/defquery todo-q [:?e]
@@ -57,6 +62,10 @@
 
 (eav.rules/defquery transients-q []
   [?transient <- :eav/transient])
+
+(eav.rules/defquery with-nil-value-q [:?e]
+  [[?e :todo/whatever nil]]
+  [?todo <- eav.rules/entity :from [[?e]]])
 
 ;; Session
 
@@ -212,3 +221,12 @@
         (todo session1 1)
         (todo session2 1)
         (todo session3 1)))))
+
+(deftest rule-and-query-with-nil-value
+  (testing "Rule and query with value nil"
+    (let [session1 (-> (upsert session {:eav/eid 1 :todo/whatever nil})
+                       (rules/fire-rules))]
+      (is (= #:todo{:eav/eid 1 :whatever nil :nil-found 1}
+             (-> (rules/query session1 with-nil-value-q :?e 1)
+                 first
+                 :?todo))))))

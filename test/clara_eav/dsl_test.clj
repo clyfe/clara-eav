@@ -22,6 +22,9 @@
          #::dsl{:e '_, :a :todo/done, :v false}
          ['_ :todo/done false]
 
+         #::dsl{:e '_, :a :todo/done, :v nil}
+         ['_ :todo/done nil]
+
          #::dsl{:e 1, :a :todo/done}
          [1 :todo/done]
 
@@ -40,6 +43,9 @@
 (deftest conditions-test
   (testing "Transforming an EAV conditions into a Clara-Rules conditions."
     (are [x y] (= x (#'dsl/conditions (second (eav y))))
+
+         '((= (:e this) 1) (= (:v this) nil))
+         [1 :todo/done nil]
 
          '((= (:e this) 1) (= (:v this) false))
          [1 :todo/done false]
@@ -75,6 +81,7 @@
      [[_]]
      [[:eav/transient]]
      [[?e :todo/done ?v]]
+     [[?e :todo/whatever nil]]
      [?toggle <- Toggle (= e ?e)]
      [?eav <- [?e :todo/done ?v]]
      [:test (= ?e ?v)]
@@ -90,6 +97,7 @@
      [:eav/all]
      [:eav/all (= (:e this) :eav/transient)]
      [:todo/done (= (:e this) ?e) (= (:v this) ?v)]
+     [:todo/whatever (= (:e this) ?e) (= (:v this) nil)]
      [?toggle <- Toggle (= e ?e)]
      [?eav <- :todo/done (= (:e this) ?e) (= (:v this) ?v)]
      [:test (= ?e ?v)]
@@ -109,6 +117,7 @@
      [[_]]
      [[:eav/transient]]
      [[?e :todo/done ?v]]
+     [[?e :todo/whatever nil]]
      [?toggle <- Toggle (= e ?e)]
      [?eav <- [?e :todo/done ?v]]
      [:test (= ?e ?v)]
@@ -122,6 +131,7 @@
      [:eav/all]
      [:eav/all (= (:e this) :eav/transient)]
      [:todo/done (= (:e this) ?e) (= (:v this) ?v)]
+     [:todo/whatever (= (:e this) ?e) (= (:v this) nil)]
      [?toggle <- Toggle (= e ?e)]
      [?eav <- :todo/done (= (:e this) ?e) (= (:v this) ?v)]
      [:test (= ?e ?v)]

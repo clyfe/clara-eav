@@ -84,13 +84,14 @@
 (defn- conditions
   "Transforms a fact conditions from EAV fact form to Clara fact form."
   [eav]
-  (let [{::keys [e a v]} eav]
+  (let [{::keys [e a v]} eav
+        v? (contains? eav ::v)]
     (remove nil? (list (when (not= e '_)
                          (list '= '(:e this) e))
                        (when (symbol? a)
                          (list '= '(:a this) a))
-                       (when (some? v)
-                         (list '= '(:v this) v))))))
+                       (when v?
+                        (list '= '(:v this) v))))))
 
 (defn- fact
   "Transform a fact-eav into a fact-clara"
