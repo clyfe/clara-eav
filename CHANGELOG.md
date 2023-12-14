@@ -1,7 +1,10 @@
 ## Changelog
 
 ### [Unreleased]
-- fixed upsert eav with value nil
+#### Changed
+- Fixed upsert eav with value nil
+- Fixed rule and query eav with value nil
+- Updated Clara-Rules dependency to 0.23.0 version.
 
 ### [0.1.7] - 2018-05-05
 #### Changed

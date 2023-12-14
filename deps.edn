@@ -2,7 +2,7 @@
  {org.clojure/clojure    {:mvn/version "1.11.1"}
   org.clojure/core.match {:mvn/version "1.0.1"}
   dev.weavejester/medley {:mvn/version "1.7.0"}
-  com.cerner/clara-rules {:mvn/version "0.21.2"}}
+  com.cerner/clara-rules {:mvn/version "0.23.0"}}
 
  :aliases
  {:test

@@ -6,7 +6,7 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.clojure/core.match "1.0.1"]
                  [dev.weavejester/medley "1.7.0"]
-                 [com.cerner/clara-rules "0.21.2"]]
+                 [com.cerner/clara-rules "0.23.0"]]
   :plugins [[lein-cljsbuild "1.1.8" :exclusions [org.clojure/clojure]]
             [lein-cloverage "1.2.1"]]
   :codox {:metadata {:doc/format :markdown}}
