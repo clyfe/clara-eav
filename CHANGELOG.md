@@ -1,10 +1,17 @@
 ## Changelog
 
 ### [Unreleased]
+
+### [0.1.9] - 2023-12-15
 #### Changed
 - Fixed upsert eav with value nil
 - Fixed rule and query eav with value nil
 - Updated Clara-Rules dependency to 0.23.0 version.
+
+### [0.1.8] - 2023-04-13
+#### Changed
+- Updated Medley dependency to 1.7.0 version.
+- Updated Clara-Rules dependency to 0.21.2 version.
 
 ### [0.1.7] - 2018-05-05
 #### Changed
