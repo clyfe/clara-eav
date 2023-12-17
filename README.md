@@ -8,7 +8,7 @@ similar to [Triplestores](https://en.wikipedia.org/wiki/Triplestore). It works
 with both Clojure and ClojureScript.
 
 The main benefit of EAV triplets over Clara's default n-tuples (arbitrary
-records) is that updates (equivalent to a retraction and an insertion) are local
+records) is that updates, equivalent to a retraction and an insertion, are local
 to the attribute (EAV triplet).
     [Updating an n-tuple](http://www.metasimple.org/2017/12/23/clara-updating-facts.html)
 requires retraction and re-insertion of the whole tuple. The downside is extra
