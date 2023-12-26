@@ -30,17 +30,17 @@ For a more complete example see [this test](test/clara_eav/rules_test.cljc).
   (:require [clara.rules :as r]
             [clara-eav.rules :as er]))
 
-(er/defquery todo-q [?e]
-  [?todo <- er/entity :from [[?e]]])
+(er/defquery done-q [?e]
+  [?todo <- er/entity :from [[?e :todo/done true]]])
 
 (er/defsession session 'my.sample)
 
 (-> session
-    (er/upsert #:todo{:eav/eid :new, :text "...", :done false})
+    (er/upsert #:todo{:eav/eid :new, :text "...", :done true})
     (r/fire-rules)
-    (r/query todo-q :?e :new))
+    (r/query done-q :?e :new))
 
-; ({:?e :new, :?todo #:todo{:eav/eid :new, :text "...", :done false}})
+;; ({:?e :new, :?todo {:eav/eid :new, :todo/text "...", :todo/done true}})
 ```
 
 ## Guide
