@@ -1,5 +1,5 @@
 (ns ^:no-doc clara-eav.store
-  "A store is a subset of Datscript; it keeps track of max-eid for the sequence
+  "A store is a subset of Datascript; it keeps track of max-eid for the sequence
    of ints that resolve tempids; it also maintains an EAV index to efficiently
    compute retractables on retract and insertables and retractables on upsert,
    to be operated on Clara."
